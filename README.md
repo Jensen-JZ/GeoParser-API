@@ -102,7 +102,7 @@ Where `xx` is the ISO 639-1 language code and `{size}` is one of: `sm`, `md`, `l
 1.  **Clone the Repository:**
     ```bash
     git clone <repository-url>
-    cd geoparser-docker
+    cd GeoParser-API
     ```
 
 2.  **Configure Environment:**
@@ -205,6 +205,10 @@ Where `xx` is the ISO 639-1 language code and `{size}` is one of: `sm`, `md`, `l
 
 ## Running the Application
 
+You have two options to run the GeoParser API:
+
+### Option 1: Build from Source (Development)
+
 Once the setup is complete, you can start the GeoParser API using Docker Compose:
 
 ```bash
@@ -213,6 +217,39 @@ docker-compose up -d
 
 *   The `-d` flag runs the containers in detached mode.
 *   The service will be available at `http://localhost:<PORT>` (e.g., `http://localhost:5000` if `PORT=5000`).
+
+### Option 2: Use Pre-built Image from Docker Hub (Production)
+
+For easier deployment, you can use the pre-built Docker image:
+
+```bash
+# Pull the latest image
+docker pull realjensen/geoparser-api:latest
+
+# Run with docker-compose using pre-built image
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+Or run directly with Docker:
+
+```bash
+# Create required directories
+mkdir -p models data logs
+
+# Run the container
+docker run -d \
+  --name geoparser-api \
+  -p 5000:5000 \
+  -v $(pwd)/models:/app/models \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/logs:/app/logs \
+  --env-file .env \
+  realjensen/geoparser-api:latest
+```
+
+**Note**: You still need to download models and data using `bash setup_models.sh` before running the container.
+
+### Common Commands
 
 To view the logs:
 ```bash
@@ -223,6 +260,48 @@ To stop the application:
 ```bash
 docker-compose down
 ```
+
+## Docker Hub Repository
+
+The GeoParser API is available as a pre-built Docker image on Docker Hub:
+
+**🐳 Docker Hub**: [realjensen/geoparser-api](https://hub.docker.com/r/realjensen/geoparser-api)
+
+Available tags:
+- `latest`: Most recent stable version
+- `v1.0`: Specific version tags
+
+### Building and Pushing to Docker Hub
+
+If you want to build and push your own version to Docker Hub:
+
+1. **Login to Docker Hub:**
+   ```bash
+   docker login
+   ```
+
+2. **Build and push using the provided script:**
+   ```bash
+   ./build_and_push.sh [version] [username]
+   ```
+   
+   Examples:
+   ```bash
+   # Push as latest with default username
+   ./build_and_push.sh
+   
+   # Push specific version
+   ./build_and_push.sh v1.1 your-username
+   ```
+
+3. **Manual build and push:**
+   ```bash
+   # Build production image
+   docker build -f Dockerfile.prod -t your-username/geoparser-api:latest .
+   
+   # Push to Docker Hub
+   docker push your-username/geoparser-api:latest
+   ```
 
 ## API Endpoints
 
@@ -670,7 +749,7 @@ GeoParser API 支持广泛的 SpaCy 语言模型进行地理实体识别。该�
 1.  **克隆仓库:**
     ```bash
     git clone <repository-url>
-    cd geoparser-docker
+    cd GeoParser-API
     ```
 
 2.  **配置环境:**
@@ -773,6 +852,10 @@ GeoParser API 支持广泛的 SpaCy 语言模型进行地理实体识别。该�
 
 ## 运行应用程序
 
+您有两种选择来运行GeoParser API：
+
+### 选项1：从源码构建（开发环境）
+
 设置完成后，您可以使用Docker Compose启动GeoParser API：
 
 ```bash
@@ -781,6 +864,39 @@ docker-compose up -d
 
 *   `-d`标志在分离模式下运行容器。
 *   服务将在`http://localhost:<PORT>`（例如，如果`PORT=5000`，则为`http://localhost:5000`）可用。
+
+### 选项2：使用Docker Hub预构建镜像（生产环境）
+
+为了更便捷的部署，您可以使用预构建的Docker镜像：
+
+```bash
+# 拉取最新镜像
+docker pull realjensen/geoparser-api:latest
+
+# 使用预构建镜像运行docker-compose
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+或直接使用Docker运行：
+
+```bash
+# 创建必需的目录
+mkdir -p models data logs
+
+# 运行容器
+docker run -d \
+  --name geoparser-api \
+  -p 5000:5000 \
+  -v $(pwd)/models:/app/models \
+  -v $(pwd)/data:/app/data \
+  -v $(pwd)/logs:/app/logs \
+  --env-file .env \
+  realjensen/geoparser-api:latest
+```
+
+**注意**：您仍然需要使用`bash setup_models.sh`下载模型和数据，然后才能运行容器。
+
+### 常用命令
 
 查看日志：
 ```bash
@@ -791,6 +907,48 @@ docker-compose logs -f geoparser
 ```bash
 docker-compose down
 ```
+
+## Docker Hub 仓库
+
+GeoParser API 作为预构建的Docker镜像可在Docker Hub上获得：
+
+**🐳 Docker Hub**: [realjensen/geoparser-api](https://hub.docker.com/r/realjensen/geoparser-api)
+
+可用标签：
+- `latest`: 最新稳定版本
+- `v1.0`: 特定版本标签
+
+### 构建并推送到Docker Hub
+
+如果您想构建并推送自己的版本到Docker Hub：
+
+1. **登录到Docker Hub:**
+   ```bash
+   docker login
+   ```
+
+2. **使用提供的脚本构建和推送:**
+   ```bash
+   ./build_and_push.sh [版本] [用户名]
+   ```
+   
+   示例：
+   ```bash
+   # 使用默认用户名推送最新版本
+   ./build_and_push.sh
+   
+   # 推送特定版本
+   ./build_and_push.sh v1.1 your-username
+   ```
+
+3. **手动构建和推送:**
+   ```bash
+   # 构建生产镜像
+   docker build -f Dockerfile.prod -t your-username/geoparser-api:latest .
+   
+   # 推送到Docker Hub
+   docker push your-username/geoparser-api:latest
+   ```
 
 ## API端点
 
