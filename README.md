@@ -10,7 +10,7 @@
 
 ## Overview
 
-The GeoParser API is a powerful service designed to extract and disambiguate geographic entities (like cities, countries, and other locations) from text. It leverages state-of-the-art NLP models to provide accurate location recognition across multiple languages. This service is containerized using Docker for easy deployment and scalability.
+The [GeoParser](https://github.com/dguzh/geoparser) API is a powerful service designed to extract and disambiguate geographic entities (like cities, countries, and other locations) from text. It leverages state-of-the-art NLP models to provide accurate location recognition across multiple languages. This service is containerized using Docker for easy deployment and scalability.
 
 ## Features
 
@@ -657,7 +657,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## 概述
 
-GeoParser API 是一个强大的服务，旨在从文本中提取和消歧地理实体（如城市、国家和其他位置）。它利用最先进的NLP模型，在多种语言中提供准确的位置识别。此服务使用Docker进行容器化，便于部署和扩展。
+[GeoParser](https://github.com/dguzh/geoparser) API 是一个强大的服务，旨在从文本中提取和消歧地理实体（如城市、国家和其他位置）。它利用最先进的NLP模型，在多种语言中提供准确的位置识别。此服务使用Docker进行容器化，便于部署和扩展。
 
 ## 功能特性
 
