@@ -643,7 +643,6 @@ If the NVIDIA runtime is correctly configured, PyTorch (a dependency of Transfor
 ## Contributing
 
 Contributions are welcome! Please feel free to submit pull requests or open issues for bugs, feature requests, or improvements.
-(Consider adding more specific guidelines if this is an active open-source project, e.g., coding standards, testing procedures).
 
 ## License
 
@@ -1290,7 +1289,6 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
 ## 贡献
 
 欢迎贡献！请随时提交拉取请求或为错误、功能请求或改进打开问题。
-（如果这是一个活跃的开源项目，请考虑添加更具体的指导原则，例如，编码标准、测试程序）。
 
 ## 许可证
 
