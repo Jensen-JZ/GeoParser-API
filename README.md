@@ -28,14 +28,14 @@ The GeoParser API is a powerful service designed to extract and disambiguate geo
 
 ## Tech Stack
 
-*   **Backend:** Python, Flask
+*   **Backend:** `Python`, `Flask`
 *   **NLP Libraries:**
     *   `geoparser` (core library)
-    *   SpaCy
-    *   Transformers (Hugging Face)
-    *   PyTorch
-*   **Containerization:** Docker, Docker Compose
-*   **WSGI Server:** Gunicorn
+    *   `SpaCy`
+    *   `Transformers` (Hugging Face)
+    *   `PyTorch`
+*   **Containerization:** `Docker`, `Docker Compose`
+*   **WSGI Server:** `Gunicorn`
 
 ## Prerequisites
 
@@ -442,7 +442,7 @@ The API provides several endpoints for interacting with the GeoParser service. A
             "clear_cache": "/api/cache/clear",
             "languages": "/api/languages"
         },
-        "documentation": "https://github.com/your-repo/geoparser-docker" // Placeholder
+        "documentation": "https://github.com/Jensen-JZ/GeoParser-API"
     }
     ```
 
@@ -546,14 +546,14 @@ GeoParser API 是一个强大的服务，旨在从文本中提取和消歧地理
 
 ## 技术栈
 
-*   **后端:** Python, Flask
+*   **后端:** `Python`, `Flask`
 *   **NLP库:**
     *   `geoparser`（核心库）
-    *   SpaCy
-    *   Transformers（Hugging Face）
-    *   PyTorch
-*   **容器化:** Docker, Docker Compose
-*   **WSGI服务器:** Gunicorn
+    *   `SpaCy`
+    *   `Transformers`（Hugging Face）
+    *   `PyTorch`
+*   **容器化:** `Docker`, `Docker Compose`
+*   **WSGI服务器:** `Gunicorn`
 
 ## 先决条件
 
@@ -577,71 +577,71 @@ GeoParser API 是一个强大的服务，旨在从文本中提取和消歧地理
     在项目根目录下创建`.env`文件。您可以复制下面示例的结构，或从现有的`.env`文件复制（如果存在）。
     最小的`.env.example`如下所示：
     ```env
-    # GeoParser API 配置
+    # GeoParser API Configuration
 
     # --------------------------------------------------------------------------
-    # 模型配置
+    # Model Configuration
     # --------------------------------------------------------------------------
-    # 用于嵌入的Transformer模型（来自Hugging Face模型库）
+    # Transformer model for embeddings (from Hugging Face Model Hub)
     TRANSFORMER_MODEL=dguzh/geo-all-MiniLM-L6-v2
-    # 使用的地名词典（geonames是geoparser的标准）
+    # Gazetteer to use (geonames is standard for geoparser)
     GAZETTEER=geonames
-    # 可用的SpaCy模型大小（例如，sm、md、lg、trf用于transformer模型）
-    # setup_models.sh脚本将尝试为每种支持的语言下载这些大小的模型。
-    # 如果在API调用中未指定，将使用此列表中的第一个大小作为默认值。
+    # Available SpaCy model sizes (e.g., sm, md, lg, trf for transformer models)
+    # The setup_models.sh script will try to download models for these sizes for each supported language.
+    # The first size in this list will be used as the default if not specified in API calls.
     AVAILABLE_MODEL_SIZES=md,sm
 
     # --------------------------------------------------------------------------
-    # 支持的语言
+    # Supported Languages
     # --------------------------------------------------------------------------
-    # 以逗号分隔的ISO 639-1语言代码列表（例如，en、de、fr、zh、es）
-    # setup_models.sh脚本将为这些语言下载模型。
+    # Comma-separated list of ISO 639-1 language codes (e.g., en, de, fr, zh, es)
+    # The setup_models.sh script will download models for these languages.
     SUPPORTED_LANGUAGES=en,de
 
     # --------------------------------------------------------------------------
-    # 模型和数据路径（在Docker容器内）
-    # 除非您修改docker-compose.yml卷挂载，否则通常不应更改这些。
+    # Model and Data Paths (within the Docker container)
+    # These should generally not be changed unless you modify docker-compose.yml volume mounts.
     # --------------------------------------------------------------------------
     SPACY_MODEL_PATH=/app/models/spacy
-    TRANSFORMERS_MODEL_PATH=/app/models/transformers # 目前未用于预下载的自定义transformers，但保留。
+    TRANSFORMERS_MODEL_PATH=/app/models/transformers # Currently not used for pre-downloaded custom transformers, but reserved.
     GEONAMES_DATA_PATH=/app/data/geonames
 
     # --------------------------------------------------------------------------
-    # API配置
+    # API Configuration
     # --------------------------------------------------------------------------
-    MAX_TEXT_LENGTH=10000  # 输入文本的最大字符数
-    TIMEOUT=30             # 请求超时（秒）
-    ENABLE_CACHE=true      # 启用/禁用内存缓存
-    MAX_BATCH_SIZE=100     # 批量请求中的最大项目数
+    MAX_TEXT_LENGTH=10000  # Maximum characters for input text
+    TIMEOUT=30             # Request timeout in seconds
+    ENABLE_CACHE=true      # Enable/disable in-memory cache
+    MAX_BATCH_SIZE=100     # Maximum items in a batch request
 
     # --------------------------------------------------------------------------
-    # 日志配置
+    # Logging Configuration
     # --------------------------------------------------------------------------
     LOG_LEVEL=INFO # DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     # --------------------------------------------------------------------------
-    # 服务器配置（用于Flask/Gunicorn）
+    # Server Configuration (for Flask/Gunicorn)
     # --------------------------------------------------------------------------
     HOST=0.0.0.0
     PORT=5000
-    DEBUG=false # 设置为true以启用Flask调试模式（不建议用于Gunicorn生产环境）
+    DEBUG=false # Set to true for Flask debug mode (not recommended for Gunicorn production)
 
-    # Gunicorn工作器设置（请参阅docker-compose.yml命令了解如何使用这些）
+    # Gunicorn worker settings (see docker-compose.yml command for how these are used)
     WORKERS=2
     WORKER_TIMEOUT=600
-    WORKER_CLASS=sync # 或'gthread'、'eventlet'、'gevent'用于异步工作器
+    WORKER_CLASS=sync # or 'gthread', 'eventlet', 'gevent' for async workers
     MAX_REQUESTS=1000
     MAX_REQUESTS_JITTER=100
 
     # --------------------------------------------------------------------------
-    # GPU配置（信息性的，实际GPU分配通过Docker进行）
+    # GPU Configuration (Informational, actual GPU allocation is via Docker)
     # --------------------------------------------------------------------------
-    CUDA_VISIBLE_DEVICES=0 # 要使用的特定GPU，如果有多个可用
+    CUDA_VISIBLE_DEVICES=0 # Specific GPU to use, if multiple are available
     NVIDIA_VISIBLE_DEVICES=all
     NVIDIA_DRIVER_CAPABILITIES=compute,utility
 
     # --------------------------------------------------------------------------
-    # Docker资源限制（信息性的，实际限制在docker-compose.yml中）
+    # Docker Resource Limits (Informational, actual limits are in docker-compose.yml)
     # --------------------------------------------------------------------------
     MEMORY_LIMIT=12G
     MEMORY_RESERVATION=6G
@@ -705,17 +705,17 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
 *   **请求体:**
     ```json
     {
-        "text": "我想下周从柏林去巴黎旅行。",
-        "languages": ["zh"], // 可选：语言代码列表（例如，"en"、"de"）。如果未提供或模型不可用，则使用默认值。
-        "model_size": "md"   // 可选："sm"、"md"、"lg"、"trf"。如果未提供，则使用.env中的默认值。
+        "text": "I want to travel from Berlin to Paris next week.",
+        "languages": ["en"], // Optional: list of language codes (e.g., "en", "de"). Uses default if not provided or model not available.
+        "model_size": "md"   // Optional: "sm", "md", "lg", "trf". Uses default from .env if not provided.
     }
     ```
 *   **示例请求 (`curl`):**
     ```bash
     curl -X POST -H "Content-Type: application/json" \
     -d '{
-        "text": "我想下周从柏林去巴黎旅行。",
-        "languages": ["zh"],
+        "text": "I want to travel from Berlin to Paris next week.",
+        "languages": ["en"],
         "model_size": "md"
     }' \
     http://localhost:5000/api/parse
@@ -724,13 +724,13 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     ```json
     {
         "success": true,
-        "language_detected": "zh",
-        "model_used": "zh_core_web_md",
-        "text_length": 15,
+        "language_detected": "en",
+        "model_used": "en_core_web_md",
+        "text_length": 50,
         "locations_found": 2,
         "locations": [
             {
-                "name": "柏林",
+                "name": "Berlin",
                 "geonameid": "2950159",
                 "feature_type": "PPLC",
                 "latitude": 52.52437,
@@ -742,7 +742,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
                 "country_name": "Germany"
             },
             {
-                "name": "巴黎",
+                "name": "Paris",
                 "geonameid": "2988507",
                 "feature_type": "PPLC",
                 "latitude": 48.85341,
@@ -764,7 +764,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
         ```json
         {
             "success": false,
-            "error": "文本不能为空",
+            "error": "Text cannot be empty",
             "locations": []
         }
         ```
@@ -781,9 +781,9 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     {
         "texts": [
             {
-                "id": "doc1", // 可选：用户定义的文本标识符
-                "text": "伦敦是英国的首都。",
-                "languages": ["zh"] // 可选：每项语言
+                "id": "doc1", // Optional: user-defined identifier for the text
+                "text": "London is the capital of the United Kingdom.",
+                "languages": ["en"] // Optional: per-item language
             },
             {
                 "id": "doc2",
@@ -791,7 +791,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
                 "languages": ["de"]
             }
         ],
-        "model_size": "md" // 可选：应用于所有文本，除非每项被覆盖
+        "model_size": "md" // Optional: applies to all texts unless overridden per-item (though per-item model_size is not explicitly shown in service.py, it's good practice for future)
     }
     ```
 *   **示例请求 (`curl`):**
@@ -799,7 +799,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     curl -X POST -H "Content-Type: application/json" \
     -d '{
         "texts": [
-            {"id": "doc1", "text": "伦敦是英国的首都。", "languages": ["zh"]},
+            {"id": "doc1", "text": "London is the capital of the United Kingdom.", "languages": ["en"]},
             {"id": "doc2", "text": "Ich fahre nach München.", "languages": ["de"]}
         ],
         "model_size": "md"
@@ -815,17 +815,17 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
         "failed_parses": 0,
         "results": [
             {
-                "id": "doc1", // 如果在请求中提供则包含
+                "id": "doc1", // Included if provided in request
                 "success": true,
-                "language_detected": "zh",
-                // ... 类似于/api/parse响应的其他字段
+                "language_detected": "en",
+                // ... other fields similar to /api/parse response
                 "locations": [ /* ... */ ]
             },
             {
                 "id": "doc2",
                 "success": true,
                 "language_detected": "de",
-                // ... 其他字段
+                // ... other fields
                 "locations": [ /* ... */ ]
             }
         ]
@@ -849,11 +849,11 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     {
         "success": true,
         "info": {
-            "loaded_models": ["en", "de", "zh"], // 实际加载的语言代码
+            "loaded_models": ["en", "de"], // Actual loaded language codes
             "default_model_size": "md",
             "transformer_model": "dguzh/geo-all-MiniLM-L6-v2",
             "gazetteer": "geonames",
-            "supported_languages": ["en", "de", "fr", "zh", "es"], // 来自.env
+            "supported_languages": ["en", "de", "fr", "zh", "es"], // From .env
             "cache_enabled": true,
             "cache_size": 10,
             "max_text_length": 10000,
@@ -887,7 +887,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     ```json
     {
         "status": "unhealthy",
-        "error": "GeoParser服务不可用"
+        "error": "GeoParser service is not available"
     }
     ```
 
@@ -905,14 +905,14 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     ```json
     {
         "success": true,
-        "message": "缓存清除成功。删除了10个条目。"
+        "message": "Cache cleared successfully. Removed 10 entries."
     }
     ```
 *   **缓存禁用时的响应 (200 OK但表示无操作):**
     ```json
     {
-        "success": false, // 或true，带有不同的消息
-        "message": "缓存未启用。没有缓存需要清除。"
+        "success": false, // Or true with a different message
+        "message": "Caching is not enabled. No cache to clear."
     }
     ```
 
@@ -930,9 +930,9 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     ```json
     {
         "success": true,
-        "supported_languages": ["en", "de", "fr", "zh", "es"], // 来自.env
-        "default_model_size": "md", // 来自.env
-        "available_model_sizes": ["sm", "md", "lg", "trf"] // 来自.env
+        "supported_languages": ["en", "de", "fr", "zh", "es"], // From .env
+        "default_model_size": "md", // From .env
+        "available_model_sizes": ["sm", "md", "lg", "trf"] // From .env
     }
     ```
 
@@ -960,7 +960,7 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
             "clear_cache": "/api/cache/clear",
             "languages": "/api/languages"
         },
-        "documentation": "https://github.com/your-repo/geoparser-docker" // 占位符
+        "documentation": "https://github.com/Jensen-JZ/GeoParser-API"
     }
     ```
 
@@ -995,14 +995,14 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
     ```yaml
     services:
       geoparser:
-        # ... 其他配置
+        # ... other configurations
         runtime: nvidia
         deploy:
           resources:
             reservations:
               devices:
                 - driver: nvidia
-                  count: 1 # 或'all'
+                  count: 1 # Or 'all'
                   capabilities: [gpu]
     ```
     （注意：`deploy.resources.reservations.devices`结构很常见，但`runtime: nvidia`是Docker Compose v2+的主要启用器）。

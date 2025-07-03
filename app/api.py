@@ -268,7 +268,7 @@ def root():
             'clear_cache': '/api/cache/clear',
             'languages': '/api/languages'
         },
-        'documentation': 'https://github.com/your-repo/geoparser-docker'
+        'documentation': 'https://github.com/Jensen-JZ/GeoParser-API'
     }, 200)
 
 @app.errorhandler(404)
