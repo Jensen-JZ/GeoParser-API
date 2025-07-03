@@ -37,6 +37,56 @@ The GeoParser API is a powerful service designed to extract and disambiguate geo
 *   **Containerization:** `Docker`, `Docker Compose`
 *   **WSGI Server:** `Gunicorn`
 
+## Supported Models
+
+The GeoParser API supports a wide range of SpaCy language models for geographic entity recognition. The service currently supports **24 languages** with different model configurations:
+
+### Language Support Overview
+
+| Language | Code | Model Pattern | Available Sizes | TRF Support | Notes |
+|----------|------|---------------|----------------|-------------|-------|
+| Catalan | `ca` | `ca_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| Chinese | `zh` | `zh_core_web_{size}` | sm, md, lg, trf | ✅ | Web-based model |
+| Croatian | `hr` | `hr_core_news_{size}` | sm, md, lg | ❌ | |
+| Danish | `da` | `da_core_news_{size}` | sm, md, lg | ❌ | |
+| Dutch | `nl` | `nl_core_news_{size}` | sm, md, lg | ❌ | |
+| English | `en` | `en_core_web_{size}` | sm, md, lg, trf | ✅ | Web-based model |
+| Finnish | `fi` | `fi_core_news_{size}` | sm, md, lg | ❌ | |
+| French | `fr` | `fr_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `fr_dep_news_trf` (dependency parsing only) |
+| German | `de` | `de_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `de_dep_news_trf` (dependency parsing only) |
+| Greek | `el` | `el_core_news_{size}` | sm, md, lg | ❌ | |
+| Italian | `it` | `it_core_news_{size}` | sm, md, lg | ❌ | |
+| Japanese | `ja` | `ja_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| Korean | `ko` | `ko_core_news_{size}` | sm, md, lg | ❌ | |
+| Lithuanian | `lt` | `lt_core_news_{size}` | sm, md, lg | ❌ | |
+| Macedonian | `mk` | `mk_core_news_{size}` | sm, md, lg | ❌ | |
+| Norwegian | `nb` | `nb_core_news_{size}` | sm, md, lg | ❌ | |
+| Polish | `pl` | `pl_core_news_{size}` | sm, md, lg | ❌ | |
+| Portuguese | `pt` | `pt_core_news_{size}` | sm, md, lg | ❌ | |
+| Romanian | `ro` | `ro_core_news_{size}` | sm, md, lg | ❌ | |
+| Russian | `ru` | `ru_core_news_{size}` | sm, md, lg | ❌ | |
+| Slovenian | `sl` | `sl_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| Spanish | `es` | `es_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `es_dep_news_trf` (dependency parsing only) |
+| Swedish | `sv` | `sv_core_news_{size}` | sm, md, lg | ❌ | |
+| Ukrainian | `uk` | `uk_core_news_{size}` | sm, md, lg, trf | ✅ | |
+
+### Model Size Recommendations
+
+- **sm (Small)**: Fastest, minimal memory usage, good for basic NER
+- **md (Medium)**: Balanced performance and accuracy - **Recommended for most use cases**
+- **lg (Large)**: Higher accuracy, more memory intensive
+- **trf (Transformer)**: Highest accuracy but **not recommended** for geo-parsing due to limited availability and compatibility issues
+
+> **⚠️ Important Note**: While some languages have `trf` (transformer) models available, we **do not recommend** using the `trf` size for geographic entity recognition. Languages like German, French, and Spanish only have dependency parsing transformer models (`xx_dep_news_trf`) which cannot perform named entity recognition required for geo-parsing.
+
+### Model Naming Convention
+
+The service follows SpaCy's standard naming convention:
+- **English & Chinese**: Use `xx_core_web_{size}` (web-trained models)
+- **All other languages**: Use `xx_core_news_{size}` (news-trained models)
+
+Where `xx` is the ISO 639-1 language code and `{size}` is one of: `sm`, `md`, `lg`, `trf`.
+
 ## Prerequisites
 
 *   [Git](https://git-scm.com/downloads)
@@ -555,6 +605,56 @@ GeoParser API 是一个强大的服务，旨在从文本中提取和消歧地理
 *   **容器化:** `Docker`, `Docker Compose`
 *   **WSGI服务器:** `Gunicorn`
 
+## 支持的模型
+
+GeoParser API 支持广泛的 SpaCy 语言模型进行地理实体识别。该服务目前支持 **24种语言**，具有不同的模型配置：
+
+### 语言支持概览
+
+| 语言 | 代码 | 模型模式 | 可用大小 | TRF支持 | 备注 |
+|------|------|----------|----------|---------|------|
+| 加泰罗尼亚语 | `ca` | `ca_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| 中文 | `zh` | `zh_core_web_{size}` | sm, md, lg, trf | ✅ | 基于网络的模型 |
+| 克罗地亚语 | `hr` | `hr_core_news_{size}` | sm, md, lg | ❌ | |
+| 丹麦语 | `da` | `da_core_news_{size}` | sm, md, lg | ❌ | |
+| 荷兰语 | `nl` | `nl_core_news_{size}` | sm, md, lg | ❌ | |
+| 英语 | `en` | `en_core_web_{size}` | sm, md, lg, trf | ✅ | 基于网络的模型 |
+| 芬兰语 | `fi` | `fi_core_news_{size}` | sm, md, lg | ❌ | |
+| 法语 | `fr` | `fr_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `fr_dep_news_trf`（仅依存句法分析） |
+| 德语 | `de` | `de_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `de_dep_news_trf`（仅依存句法分析） |
+| 希腊语 | `el` | `el_core_news_{size}` | sm, md, lg | ❌ | |
+| 意大利语 | `it` | `it_core_news_{size}` | sm, md, lg | ❌ | |
+| 日语 | `ja` | `ja_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| 韩语 | `ko` | `ko_core_news_{size}` | sm, md, lg | ❌ | |
+| 立陶宛语 | `lt` | `lt_core_news_{size}` | sm, md, lg | ❌ | |
+| 马其顿语 | `mk` | `mk_core_news_{size}` | sm, md, lg | ❌ | |
+| 挪威语 | `nb` | `nb_core_news_{size}` | sm, md, lg | ❌ | |
+| 波兰语 | `pl` | `pl_core_news_{size}` | sm, md, lg | ❌ | |
+| 葡萄牙语 | `pt` | `pt_core_news_{size}` | sm, md, lg | ❌ | |
+| 罗马尼亚语 | `ro` | `ro_core_news_{size}` | sm, md, lg | ❌ | |
+| 俄语 | `ru` | `ru_core_news_{size}` | sm, md, lg | ❌ | |
+| 斯洛文尼亚语 | `sl` | `sl_core_news_{size}` | sm, md, lg, trf | ✅ | |
+| 西班牙语 | `es` | `es_core_news_{size}` | sm, md, lg | ⚠️ | TRF: `es_dep_news_trf`（仅依存句法分析） |
+| 瑞典语 | `sv` | `sv_core_news_{size}` | sm, md, lg | ❌ | |
+| 乌克兰语 | `uk` | `uk_core_news_{size}` | sm, md, lg, trf | ✅ | |
+
+### 模型大小建议
+
+- **sm（小）**: 最快，内存使用最少，适合基本NER
+- **md（中）**: 性能和准确性平衡 - **大多数情况下推荐使用**
+- **lg（大）**: 更高准确性，更占内存
+- **trf（Transformer）**: 最高准确性，但**不推荐**用于地理解析，因为可用性有限且存在兼容性问题
+
+> **⚠️ 重要提示**: 虽然某些语言有 `trf`（transformer）模型可用，但我们**不建议**将 `trf` 大小用于地理实体识别。像德语、法语和西班牙语等语言只有依存句法分析的transformer模型（`xx_dep_news_trf`），无法执行地理解析所需的命名实体识别。
+
+### 模型命名约定
+
+该服务遵循 SpaCy 的标准命名约定：
+- **英语和中文**: 使用 `xx_core_web_{size}`（基于网络训练的模型）
+- **所有其他语言**: 使用 `xx_core_news_{size}`（基于新闻训练的模型）
+
+其中 `xx` 是 ISO 639-1 语言代码，`{size}` 是以下之一：`sm`、`md`、`lg`、`trf`。
+
 ## 先决条件
 
 *   [Git](https://git-scm.com/downloads)
@@ -1037,4 +1137,3 @@ API提供了几个端点来与GeoParser服务交互。所有请求和响应体�
 ## 许可证
 
 本项目基于MIT许可证。有关详细信息，请参阅[LICENSE](LICENSE)文件。
-```
