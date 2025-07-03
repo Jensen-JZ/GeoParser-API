@@ -1,0 +1,52 @@
+services:
+  geoparser:
+    build: .
+    ports:
+      - "${PORT:-5000}:5000"
+    env_file:
+      - .env
+    volumes:
+      # Models and data directories - ensure models are downloaded to these paths
+      - ./models:/app/models
+      - ./data:/app/data
+      # Optional: logs directory for storing logs
+      - ./logs:/app/logs
+    restart: unless-stopped
+    entrypoint: ["/app/entrypoint.sh"]
+    command: >
+      gunicorn app.api:app
+      --bind 0.0.0.0:5000
+      --workers ${WORKERS}
+      --timeout ${WORKER_TIMEOUT}
+      --worker-class ${WORKER_CLASS}
+      --max-requests ${MAX_REQUESTS}
+      --max-requests-jitter ${MAX_REQUESTS_JITTER}
+      --access-logfile -
+      --error-logfile -
+    # GPU configuration
+    runtime: nvidia
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 600s  # Allow 10 minutes for models to load
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT}
+          cpus: '${CPU_LIMIT}'
+        reservations:
+          memory: ${MEMORY_RESERVATION}
+          cpus: '${CPU_RESERVATION}'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "${LOG_MAX_SIZE}"
+        max-file: "${LOG_MAX_FILE}"
+    networks:
+      - geoparser_network
+
+networks:
+  geoparser_network:
+    driver: bridge
